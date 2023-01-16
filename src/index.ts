@@ -3,16 +3,30 @@
  * @author Yousuf Kalim
  */
 
-let frameSets = [];
-let smoothFrame = [];
+type Landmarks = Array<{
+  x: number;
+  y: number;
+  z: number;
+  visibility: number;
+}>;
+
+export interface Results {
+  poseLandmarks: Landmarks;
+}
+
+const frameSets: Landmarks[] = [];
+const smoothFrame: Landmarks = [];
 
 /**
  * smoothLandmarks
  * @param {Object} results This should be coming directly from Mediapipe
  * @param {Function} onResults Optional: If you want to call other function instead of getting return
- * @returns {Void}
+ * @returns {Object}
  */
-const smoothLandmarks = (results, onResults) => {
+const smoothLandmarks = (
+  results: Results,
+  onResults?: (results: Results) => void,
+): Results | void => {
   // Pushing frame at the end of frameSet array
   if (results.poseLandmarks) {
     frameSets.push(results.poseLandmarks);

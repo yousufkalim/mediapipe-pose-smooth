@@ -1,9 +1,7 @@
 import { expect, test } from '@jest/globals';
-import smoothLandmarks from '../src/index.js';
+import smoothLandmarks, { Results } from '../src';
 
 test('This will test the smooth landmarks function', () => {
-  let expected = {};
-
   // Simulating Mediapipe
   for (let i = 0; i < 8; i++) {
     const landmarks = {
@@ -15,16 +13,16 @@ test('This will test the smooth landmarks function', () => {
       })),
     };
 
-    expected = smoothLandmarks(landmarks);
-  }
+    const expected = smoothLandmarks(landmarks) as Results;
 
-  // We will test only the 1st entity
-  expect(expected.poseLandmarks[0]?.x).toEqual(4.5);
+    if (i === 7) {
+      // We will test only the 1st entity
+      expect(expected.poseLandmarks[0]?.x).toEqual(4.5);
+    }
+  }
 });
 
 test('This will test the smooth landmarks function by passing onResults', () => {
-  let expected = {};
-
   // Simulating Mediapipe
   for (let i = 0; i < 8; i++) {
     const landmarks = {
@@ -36,13 +34,16 @@ test('This will test the smooth landmarks function by passing onResults', () => 
       })),
     };
 
-    const onResults = (results) => {
-      expected = results;
+    let expected = {} as Results;
+    const onResults = (results: Results) => {
+      expected = results as Results;
     };
 
     smoothLandmarks(landmarks, onResults);
-  }
 
-  // We will test only the 1st entity
-  expect(expected.poseLandmarks[0]?.x).toEqual(4.5);
+    if (i === 7) {
+      // We will test only the 1st entity
+      expect(expected.poseLandmarks[0]?.x).toEqual(4.5);
+    }
+  }
 });
