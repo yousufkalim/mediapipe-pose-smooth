@@ -1,6 +1,6 @@
 {
   "name": "mediapipe-pose-smooth",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "This will remove the jitter and smooth the landmarks given by Mediapipe",
   "type": "module",
   "source": "src/index.ts",
